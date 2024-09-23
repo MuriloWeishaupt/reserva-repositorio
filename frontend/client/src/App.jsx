@@ -11,7 +11,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/registrar" element={<Registra />} />
         <Route path="/reservar" element={<Reserva />} />
-        <Route path="/minhas-reservas" element={<ListaReserva />} />
+        <Route path="/quadro-reservas" element={<ListaReserva />} />
       </Routes>
     </Router>
   );

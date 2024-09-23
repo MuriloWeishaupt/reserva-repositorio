@@ -1,6 +1,6 @@
 // src/components/Login.jsx
 import React, { useState } from 'react';
-import './Login.css'; // Importar o arquivo CSS
+import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -8,7 +8,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Lógica para autenticar o usuário
   };
 
   return (
@@ -38,7 +37,7 @@ const Login = () => {
         <button type="submit" className="btn-login">Entrar</button>
       </form>
       <p>
-        Não tem uma conta? <a href="/register">Cadastre-se</a>
+        Não tem uma conta? <a href="/registrar">Cadastre-se</a>
       </p>
     </div>
   );
