@@ -6,7 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [ra, setRa] = useState('');
-  const [ setError] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
 
@@ -29,12 +29,36 @@ const Login = () => {
 
       navigate('/reservar')
       const data = await response.json();
+
+      localStorage.setItem('token', data.token);
       console.log('Usuário logado:', data); 
     } catch (err) {
       setError(err.message)
    }
 
+   const fazReserva = async (dadosReserva) => {
+    const token = localStorage.getItem('token')
+
+    const response = await fetch('/reserva', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      },
+      body: JSON.stringify(dadosReserva)
+    }) 
+
+    const data = await response.json()
+
+    if (response.ok) {
+      console.log(data.message)
+    } else {
+      console.error(data.message)
+    }
+   }
+
 };
+
 
 
   return (
