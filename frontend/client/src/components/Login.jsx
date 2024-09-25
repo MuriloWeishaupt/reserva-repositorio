@@ -1,14 +1,41 @@
-// src/components/Login.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
+  const [ra, setRa] = useState('');
+  const [ setError] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-  };
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:3001/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, senha, ra})
+      });
+
+      if (!response.ok) {
+        throw new Error('Credenciais inválidas');
+      }
+
+      navigate('/reservar')
+      const data = await response.json();
+      console.log('Usuário logado:', data); 
+    } catch (err) {
+      setError(err.message)
+   }
+
+};
+
 
   return (
     <div className="login-container">
@@ -31,6 +58,17 @@ const Login = () => {
             id="senha"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="ra">RA do professor:</label>
+          <input
+            type="text"
+            id="ra"
+            value={ra}
+            onChange={(e) => setRa(e.target.value)}
             required
           />
         </div>
