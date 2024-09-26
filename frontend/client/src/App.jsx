@@ -29,7 +29,7 @@ function App() {
     timeout = setTimeout(() => {
       localStorage.removeItem('token');
       setIsActive(false)
-    }, 10 * 1000);
+    },1 * 600 * 1000);
 
     window.addEventListener('mousemove', resetaLogin);
     window.addEventListener('keydown', resetaLogin);

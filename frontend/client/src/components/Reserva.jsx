@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Reserva.css'; 
+import './Reserva.css';
 
 const CadastroReserva = () => {
   const [nome, setNome] = useState('');
@@ -9,15 +9,45 @@ const CadastroReserva = () => {
   const [numeroPessoas, setNumeroPessoas] = useState('');
   const [descricao, setDescricao] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({ nome, data, horarioEntrada, horarioSaida, numeroPessoas, descricao });
-    setNome('');
-    setData('');
-    setHorarioEntrada('');
-    setHorarioSaida('')
-    setNumeroPessoas('');
-    setDescricao('');
+
+    const novaReserva = {
+      id: Date.now(),
+      professor,
+      data,
+      horarioEntrada,
+      horarioSaida,
+      numeroPessoas,
+      descricao,
+    };
+
+    try {
+      const response = await fetch('http://localhost:3001/api/reservas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(novaReserva),
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao cadastrar reserva');
+      }
+
+      const result = await response.json();
+      console.log('Reserva cadastrada com sucesso:', result);
+
+      setNome('');
+      setData('');
+      setHorarioEntrada('');
+      setHorarioSaida('');
+      setNumeroPessoas('');
+      setDescricao('');
+
+    } catch (error) {
+      console.log('Erro:', error);
+    }
   };
 
   return (
@@ -47,7 +77,7 @@ const CadastroReserva = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="horario">Horário de entrada:</label>
+          <label htmlFor="horarioEntrada">Horário de entrada:</label>
           <input
             type="time"
             id="horarioEntrada"
@@ -58,7 +88,7 @@ const CadastroReserva = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="horario">Horário de saída:</label>
+          <label htmlFor="horarioSaida">Horário de saída:</label>
           <input
             type="time"
             id="horarioSaida"
@@ -81,7 +111,8 @@ const CadastroReserva = () => {
 
         <div className="form-group">
           <label htmlFor="descricao">Descrição:</label>
-          <textarea className='descricao-fixa'
+          <textarea
+            className='descricao-fixa'
             id="descricao"
             value={descricao}
             onChange={(e) => setDescricao(e.target.value)}

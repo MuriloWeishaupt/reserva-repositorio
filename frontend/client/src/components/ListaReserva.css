@@ -34,4 +34,16 @@
   .cancelada {
     color: red;
   }
+
+  .buttonReservar {
+    width: 20%;
+    margin: auto;
+    margin-top: 5%;
+  }
+
+  .buttonReservar a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: white;
+  }
   

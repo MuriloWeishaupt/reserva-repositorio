@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import users from './database/mockDados.js'
 import autenticaJWT from './middleware.js';
 import jwt from 'jsonwebtoken'
+import reservas from './database/reservas.js';
 
 
 
@@ -31,10 +32,32 @@ app.post('/api/login', (req, res) => {
     };
 })
 
-
-app.post('/reservar', autenticaJWT, (req, res) => {
+app.post('/quadro-reservas', autenticaJWT, (req, res) => {
     res.send('Reserva realizada com sucesso!');
 });
+
+app.post('/api/reservas', (req, res) => {
+
+    const novaReserva = {
+        id: reservas.length + 1,
+        professor,
+        data,
+        horarioEntrada,
+        horarioSaida,
+        numeroPessoas,
+        descricao
+    }
+
+    const {id,  professor, data, horarioEntrada, horarioSaida, numeroPessoas, descricao} = req.body
+
+    if (!professor || !data || !horarioEntrada || !horarioSaida || !numeroPessoas || !descricao) {
+        return res.status(400).json({ message: 'Registre todos os campos'})
+    }
+
+    res.status(200).json(reservas)
+    reservas.push(novaReserva)
+    res.status(200).json({ message: 'Reserva criada com sucesso: ', novaReserva})
+})
 
 
 app.listen(PORT, () => {

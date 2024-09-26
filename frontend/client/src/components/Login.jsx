@@ -30,7 +30,7 @@ const Login = () => { // Declara os estados dos dados dos inputs (Iniciando com 
       localStorage.setItem('token', data.token); // Armazenar o token
       console.log('Usuário logado:', data); 
 
-      navigate('/reservar'); // Se login bem-sucedido, direciona para a rota /reservar
+      navigate('/quadro-reservas'); // Se login bem-sucedido, direciona para a rota /reservar
     } catch (err) {
       setError(err.message); // Mostrar mensagem de erro
     }

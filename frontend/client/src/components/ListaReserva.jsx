@@ -1,12 +1,6 @@
 import React from 'react';
 import './ListaReserva.css'; 
 
-const reservas = [
-  { id: 1, professor: 'Marcos Nogueira', data: '2024-09-25', horario: '13:00 - 15:05', status: 'Confirmada' },
-  { id: 2, professor: 'Fabiano', data: '2024-09-26', horario: '15:20 - 17:25', status: 'Pendente' },
-  { id: 3, professor: 'Emerson', data: '2024-09-27', horario: '13:00 - 14:00', status: 'Cancelada' },
-];
-
 const ListaReservas = () => {
   return (
     <div className="lista-reservas">
@@ -33,6 +27,9 @@ const ListaReservas = () => {
           ))}
         </tbody>
       </table>
+      <div className="buttonReservar">
+        <button><a href="/reservar">Faça a sua reserva</a></button>
+      </div>
     </div>
   );
 };
