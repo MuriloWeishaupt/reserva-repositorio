@@ -1,65 +1,61 @@
 import { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
-const Login = () => { //Declara os estados dos dados dos inputs (Iniciando com string vazia) e de erro
+const Login = () => { // Declara os estados dos dados dos inputs (Iniciando com string vazia) e de erro
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [ra, setRa] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-
   const handleSubmit = async (e) => { 
-    e.preventDefault(); //Evita que  pagina seja recarregada após apertar o botâo submit
-    setError(''); //Serve para não aparecerem diversas mensagens de erro na tela caso o usuário erre o login mais de uma vez
+    e.preventDefault(); // Evita que a página seja recarregada após apertar o botão submit
+    setError(''); // Serve para não aparecerem diversas mensagens de erro na tela caso o usuário erre o login mais de uma vez
 
-    try { //Serve para executar um código que pode gerar erros. Se for gerado, executa o bloco Catch
+    try { // Serve para executar um código que pode gerar erros. Se for gerado, executa o bloco catch
       const response = await fetch('http://localhost:3001/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-        }, //Fetch faz uma requisição HTTP para o endereço solicitado. POST envia os dados para o servidor
-        body: JSON.stringify({ email, senha, ra}) //Converte os dados em JSON
+        }, // Fetch faz uma requisição HTTP para o endereço solicitado. POST envia os dados para o servidor
+        body: JSON.stringify({ email, senha, ra }) // Converte os dados em JSON
       });
 
       if (!response.ok) {
-        throw new Error('Credenciais inválidas'); //Lança um erro que o bloco catch irá capturara
+        throw new Error('Credenciais inválidas'); // Lança um erro que o bloco catch irá capturar
       }
 
-      navigate('/reservar') //Se login bem sucedido, direciona pra rota /reservar
-      const data = await response.json(); //Transforma JSON para objeto JS
-
-      localStorage.setItem('token', data.token);
+      const data = await response.json(); // Transformar JSON para objeto JS
+      localStorage.setItem('token', data.token); // Armazenar o token
       console.log('Usuário logado:', data); 
-    } catch (err) {
-      setError(err.message)
-   }
 
-   const fazReserva = async (dadosReserva) => { //Sera usado mais pra frente
-    const token = localStorage.getItem('token')
+      navigate('/reservar'); // Se login bem-sucedido, direciona para a rota /reservar
+    } catch (err) {
+      setError(err.message); // Mostrar mensagem de erro
+    }
+  };
+
+  const fazReserva = async (dadosReserva) => { // Será usado mais pra frente
+    const token = localStorage.getItem('token');
 
     const response = await fetch('/reserva', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', //Informa que os dados enviados são JSON
+        'Content-Type': 'application/json', // Informa que os dados enviados são JSON
         'Authorization': token
       },
       body: JSON.stringify(dadosReserva)
-    }) 
+    }); 
 
-    const data = await response.json()
+    const data = await response.json();
 
     if (response.ok) {
-      console.log(data.message)
+      console.log(data.message);
     } else {
-      console.error(data.message)
+      console.error(data.message);
     }
-   }
-
-};
-
-
+  };
 
   return (
     <div className="login-container">
@@ -85,7 +81,6 @@ const Login = () => { //Declara os estados dos dados dos inputs (Iniciando com s
             required
           />
         </div>
-
         <div className="form-group">
           <label htmlFor="ra">RA do professor:</label>
           <input
@@ -100,7 +95,7 @@ const Login = () => { //Declara os estados dos dados dos inputs (Iniciando com s
       </form>
 
       {error && <div style={{ color: 'red', marginTop: '10px'}}>{error}</div>} 
-      {/*Se tem erro, ativa essa linha acima*/}
+      {/* Se tem erro, ativa essa linha acima */}
       <p>
         Não tem uma conta? <a href="/registrar">Cadastre-se</a>
       </p>

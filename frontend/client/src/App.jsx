@@ -54,8 +54,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/registrar" element={<Registra />} />
-        <Route path="/reservar" element={<PrivateRoute element={<Reserva />} />} />
-        <Route path="/quadro-reservas" element={<PrivateRoute element={<ListaReserva />} />} />
+        <Route path="/reservar" element={isActive ? <PrivateRoute element={<Reserva />} /> : <Navigate to='/login' />} />
+        <Route path="/quadro-reservas" element={isActive ? <PrivateRoute element={<ListaReserva />} /> : <Navigate to='/login' />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+
       </Routes>
     </Router>
   );
