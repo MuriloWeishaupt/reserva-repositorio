@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { format, parseISO} from 'date-fns'
 import './ListaReserva.css'; 
 
 const ListaReservas = () => {
@@ -36,7 +37,7 @@ const ListaReservas = () => {
             <tr key={reserva.id}>
               <td>{reserva.id}</td>
               <td>{reserva.professor}</td>
-              <td>{reserva.data}</td>
+              <td>{format(parseISO(reserva.data), 'dd/MM/yyyy')}</td>
               <td><p>Das {reserva.horarioEntrada}h às {reserva.horarioSaida}h</p></td>
               <td>{reserva.descricao}</td>
             </tr>

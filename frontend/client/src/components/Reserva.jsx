@@ -67,13 +67,16 @@ const CadastroReserva = () => {
 
         <div className="form-group">
           <label htmlFor="data">Data:</label>
-          <input
+          <inputMask
+          mask="99/99/9999"
             type="date"
             id="data"
             value={data}
             onChange={(e) => setData(e.target.value)}
             required
           />
+          {(inputProps) => <input type="text" {...inputProps}/>}
+          <input/>
         </div>
 
         <div className="form-group">
