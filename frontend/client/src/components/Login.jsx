@@ -36,26 +36,7 @@ const Login = () => { // Declara os estados dos dados dos inputs (Iniciando com 
     }
   };
 
-  const fazReserva = async (dadosReserva) => { // Será usado mais pra frente
-    const token = localStorage.getItem('token');
-
-    const response = await fetch('/reserva', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // Informa que os dados enviados são JSON
-        'Authorization': token
-      },
-      body: JSON.stringify(dadosReserva)
-    }); 
-
-    const data = await response.json();
-
-    if (response.ok) {
-      console.log(data.message);
-    } else {
-      console.error(data.message);
-    }
-  };
+  
 
   return (
     <div className="login-container">
