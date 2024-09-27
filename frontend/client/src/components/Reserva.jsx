@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Reserva.css';
 
 const CadastroReserva = () => {
-  const [nome, setNome] = useState('');
+  const [professor, setProfessor] = useState('');
   const [data, setData] = useState('');
   const [horarioEntrada, setHorarioEntrada] = useState('');
   const [horarioSaida, setHorarioSaida] = useState('');
@@ -38,7 +38,7 @@ const CadastroReserva = () => {
       const result = await response.json();
       console.log('Reserva cadastrada com sucesso:', result);
 
-      setNome('');
+      setProfessor('');
       setData('');
       setHorarioEntrada('');
       setHorarioSaida('');
@@ -55,12 +55,12 @@ const CadastroReserva = () => {
       <h2>Cadastro de Reserva do Auditório</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="nome">Nome do Professor solicitante:</label>
+          <label htmlFor="professor">Nome do Professor solicitante:</label>
           <input
             type="text"
-            id="nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
+            id="professor"
+            value={professor}
+            onChange={(e) => setProfessor(e.target.value)}
             required
           />
         </div>
@@ -121,6 +121,7 @@ const CadastroReserva = () => {
         </div>
 
         <button type="submit">Cadastrar Reserva</button>
+        <a href="/quadro-reservas"><button type='button' className='checkList'>Verificar reservas</button></a>
       </form>
     </div>
   );

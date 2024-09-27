@@ -37,6 +37,7 @@ app.post('/quadro-reservas', autenticaJWT, (req, res) => {
 });
 
 app.post('/api/reservas', (req, res) => {
+    const {id,  professor, data, horarioEntrada, horarioSaida, numeroPessoas, descricao} = req.body
 
     const novaReserva = {
         id: reservas.length + 1,
@@ -48,15 +49,18 @@ app.post('/api/reservas', (req, res) => {
         descricao
     }
 
-    const {id,  professor, data, horarioEntrada, horarioSaida, numeroPessoas, descricao} = req.body
+
 
     if (!professor || !data || !horarioEntrada || !horarioSaida || !numeroPessoas || !descricao) {
         return res.status(400).json({ message: 'Registre todos os campos'})
     }
 
-    res.status(200).json(reservas)
     reservas.push(novaReserva)
     res.status(200).json({ message: 'Reserva criada com sucesso: ', novaReserva})
+})
+
+app.get('/api/reservas', (req, res) => {
+    res.status(200).json(reservas)
 })
 
 

@@ -1,7 +1,23 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import './ListaReserva.css'; 
 
 const ListaReservas = () => {
+  const [reservas, setReservas] = useState([]);
+
+  useEffect(() => {
+    const fetchReservas = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/reservas')
+        const data= await response.json()
+        setReservas(data)
+      } catch (error) {
+        console.log('Erro ao buscar reservas: ', error)
+      }
+    }
+
+    fetchReservas()
+  }, [])
+
   return (
     <div className="lista-reservas">
       <h2>Lista de Reservas</h2>
@@ -12,7 +28,7 @@ const ListaReservas = () => {
             <th>Nome do Professor</th>
             <th>Data</th>
             <th>Horário</th>
-            <th>Status</th>
+            <th>Descrição</th>
           </tr>
         </thead>
         <tbody>
@@ -21,8 +37,8 @@ const ListaReservas = () => {
               <td>{reserva.id}</td>
               <td>{reserva.professor}</td>
               <td>{reserva.data}</td>
-              <td>{reserva.horario}</td>
-              <td className={reserva.status.toLowerCase()}>{reserva.status}</td>
+              <td><p>Das {reserva.horarioEntrada}h às {reserva.horarioSaida}h</p></td>
+              <td>{reserva.descricao}</td>
             </tr>
           ))}
         </tbody>
