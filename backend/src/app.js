@@ -25,8 +25,8 @@ app.post('/api/login', (req, res) => {
     );
 
     if (user) {
-        const token = jwt.sign({ id: user.id, ra: user.ra}, 'segredo', { expiresIn: '1h'})
-        res.status(200).json({ token });
+        const token = jwt.sign({ id: user.id, ra: user.ra, nome: user.nome}, 'segredo', { expiresIn: '1h'})
+        res.status(200).json({ token, nome: user.nome });
     } else {
         res.status(401).json({ message: 'Credenciais Inválidas'});
     };

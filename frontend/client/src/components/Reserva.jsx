@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import './Reserva.css';
+import Header from './Header';
+import { useAuth } from '../AuthContext';
 
 const CadastroReserva = () => {
   const [professor, setProfessor] = useState('');
@@ -8,6 +10,7 @@ const CadastroReserva = () => {
   const [horarioSaida, setHorarioSaida] = useState('');
   const [numeroPessoas, setNumeroPessoas] = useState('');
   const [descricao, setDescricao] = useState('');
+  const { user } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,6 +54,8 @@ const CadastroReserva = () => {
   };
 
   return (
+    <>
+    <Header nome={user?.nome}/>
     <div className="cadastro-reserva">
       <h2>Cadastro de Reserva do Auditório</h2>
       <form onSubmit={handleSubmit}>
@@ -125,6 +130,7 @@ const CadastroReserva = () => {
         <a href="/quadro-reservas"><button type='button' className='checkList'>Verificar reservas</button></a>
       </form>
     </div>
+    </>
   );
 };
 

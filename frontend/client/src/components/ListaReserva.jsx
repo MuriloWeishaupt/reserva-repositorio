@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 import { format, parseISO} from 'date-fns'
 import './ListaReserva.css'; 
+import Header from './Header'
+import PropTypes from 'prop-types';
+import { useAuth } from '../AuthContext';
 
 const ListaReservas = () => {
   const [reservas, setReservas] = useState([]);
+  const { user } = useAuth()
 
   useEffect(() => {
     const fetchReservas = async () => {
@@ -21,6 +25,7 @@ const ListaReservas = () => {
 
   return (
     <div className="lista-reservas">
+      <Header nome={user?.nome}/>
       <h2>Lista de Reservas</h2>
       <table>
         <thead>
@@ -49,6 +54,11 @@ const ListaReservas = () => {
       </div>
     </div>
   );
+
 };
+
+ListaReservas.propTypes = {
+  nome: PropTypes.string,  
+}
 
 export default ListaReservas;

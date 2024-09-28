@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Registra.css';
+import Header from './Header';
+import { useAuth } from '../AuthContext';
 
 const Cadastro = () => {
   const [nome, setNome] = useState(''); //Faz a declaração dos estados do UseState
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const [error, setError] = useState('');
+  const error = useState('');
+  const { user } = useAuth()
 
   const handleSubmit = (e) => { {/*Código para quando o botão de submit for apertado, a página não recarregar*/}
     e.preventDefault();
@@ -19,6 +22,8 @@ const Cadastro = () => {
   };
 
   return (
+    <>
+    <Header nome={user?.nome}/>
     <div className="cadastro-container">
       <h1>Cadastro de Usuário</h1>
       {error && <p className="error-message">{error}</p>}  {/*Exibe alguma mensagem de erro, se tiver nessa budega*/}
@@ -59,6 +64,7 @@ const Cadastro = () => {
         Já tem uma conta? <a href="/login">Faça login</a>
       </p>
     </div>
+    </>
   );
 };
 
