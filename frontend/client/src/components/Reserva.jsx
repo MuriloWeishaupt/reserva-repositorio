@@ -10,22 +10,46 @@ const CadastroReserva = () => {
   const [horarioSaida, setHorarioSaida] = useState('');
   const [numeroPessoas, setNumeroPessoas] = useState('');
   const [descricao, setDescricao] = useState('');
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const { user } = useAuth()
+
+  const verificaReserva = async () => {
+    const checkReserva = await fetch(`http://localhost:3001/api/reservas?data=${data}&horarioEntrada=${horarioEntrada}&horarioSaida=${horarioSaida}`);
+
+    if (!checkReserva.ok) {
+      setError('Erro ao verificar reservas')
+      return
+    }
+
+    return checkReserva.json()
+
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const novaReserva = {
-      id: Date.now(),
-      professor,
-      data,
-      horarioEntrada,
-      horarioSaida,
-      numeroPessoas,
-      descricao,
-    };
+    setError('')
+    setLoading(true)
 
     try {
+      const reservaExiste = await verificaReserva();
+      
+      if (reservaExiste.length > 0) {
+        setError('Horário de reserva indisponível')
+        setLoading(false)
+        return
+      }
+
+      const novaReserva = {
+        id: Date.now(),
+        professor,
+        data,
+        horarioEntrada,
+        horarioSaida,
+        numeroPessoas,
+        descricao,
+      };
+
       const response = await fetch('http://localhost:3001/api/reservas', {
         method: 'POST',
         headers: {
@@ -126,7 +150,10 @@ const CadastroReserva = () => {
           />
         </div>
 
-        <button type="submit">Cadastrar Reserva</button>
+        {error && <div style={{ color: 'red' }}>{error}</div>}
+        <button type="submit" disabled={loading}>
+            {loading ? 'Cadastrando...' : 'Cadastrar Reserva'}
+          </button>
         <a href="/quadro-reservas"><button type='button' className='checkList'>Verificar reservas</button></a>
       </form>
     </div>

@@ -37,7 +37,24 @@ app.post('/quadro-reservas', autenticaJWT, (req, res) => {
 });
 
 app.post('/api/reservas', (req, res) => {
+
     const {id,  professor, data, horarioEntrada, horarioSaida, numeroPessoas, descricao} = req.body
+
+    if (!professor || !data || !horarioEntrada || !horarioSaida || !numeroPessoas || !descricao) {
+        return res.status(400).json({ message: 'Registre todos os campos'})
+    }
+    
+    const horarioConflito = reservas.find(reserva => {
+        return reserva.data === data &&
+               ((horarioEntrada >= reserva.horarioEntrada && horarioEntrada < reserva.horarioSaida) ||
+               (horarioSaida > reserva.horarioEntrada && horarioSaida <= reserva.horarioSaida));
+    });
+
+    if (horarioConflito) {
+        return res.status(400).json({ message: 'Horário de reserva indisponível' });
+    }
+
+
 
     const novaReserva = {
         id: reservas.length + 1,
@@ -49,11 +66,6 @@ app.post('/api/reservas', (req, res) => {
         descricao
     }
 
-
-
-    if (!professor || !data || !horarioEntrada || !horarioSaida || !numeroPessoas || !descricao) {
-        return res.status(400).json({ message: 'Registre todos os campos'})
-    }
 
     reservas.push(novaReserva)
     res.status(200).json({ message: 'Reserva criada com sucesso: ', novaReserva})
