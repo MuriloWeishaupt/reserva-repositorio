@@ -12,7 +12,7 @@ const autenticaJWT = (req, res, next) => {
             return res.sendStatus(403);
         }
         req.user = user
-        next(); //já pode seguir oara os próximos passos
+        next(); //já pode seguir para os próximos passos
     })
 }
 

@@ -4,6 +4,7 @@ import './ListaReserva.css';
 import Header from './Header'
 import PropTypes from 'prop-types';
 import { useAuth } from '../AuthContext';
+import nome from './Login'
 
 const ListaReservas = () => {
   const [reservas, setReservas] = useState([]);
