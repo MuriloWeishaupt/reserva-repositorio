@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './Reserva.css';
 import Header from './Header';
 import { useAuth } from '../AuthContext';
+import reservas from './ListaReserva'
 
 const CadastroReserva = () => {
   const [data, setData] = useState('');
@@ -25,7 +26,7 @@ const CadastroReserva = () => {
 
     // Verifica conflito de horários
     return reservas.some(reserva => 
-      (reserva.horarioEntrada < horarioSaida && reserva.horarioSaida > horarioEntrada)
+      (reserva.data === data && (horarioEntrada < reserva.horarioSaida && horarioSaida > reserva.horarioEntrada))
     );
   };
 
@@ -33,12 +34,16 @@ const CadastroReserva = () => {
     e.preventDefault();
     setError('');
     setLoading(true);
+    
 
-    try {
+    try { 
       const reservaJaExiste = await verificaReserva();
 
       if (reservaJaExiste) {
         setError('Horário de reserva indisponível');
+        console.log('Reservas existentes:', reservas);
+        console.log('Nova reserva:', novaReserva);
+
         setLoading(false);
         return;
       }
