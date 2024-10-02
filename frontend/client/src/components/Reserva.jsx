@@ -2,7 +2,6 @@ import { useState } from 'react';
 import './Reserva.css';
 import Header from './Header';
 import { useAuth } from '../AuthContext';
-import reservas from './ListaReserva'
 
 const CadastroReserva = () => {
   const [data, setData] = useState('');
@@ -10,16 +9,28 @@ const CadastroReserva = () => {
   const [horarioSaida, setHorarioSaida] = useState('');
   const [numeroPessoas, setNumeroPessoas] = useState('');
   const [descricao, setDescricao] = useState('');
+  const [turma, setTurma] = useState('');
+  const [bloco, setBloco] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { user } = useAuth();
+
+  // Definição de turmas e blocos
+  const turmas = {
+    '1°TRT': ['A', 'B', 'Ambos'],
+    '2°TRT': ['A', 'B', 'Ambos'],
+    '3°TRT': ['A', 'B', 'Ambos'],
+    '1°DSN': ['A', 'B', 'Ambos'],
+    '2°DSN': ['A', 'B', 'Ambos'],
+    '3°DSN': ['A', 'B', 'Ambos'],
+  };
 
   const verificaReserva = async () => {
     const response = await fetch(`http://localhost:3001/api/reservas?data=${data}`);
     
     if (!response.ok) {
       setError('Erro ao verificar reservas');
-      return false; // Retorna false se a verificação falhar
+      return false; 
     }
 
     const reservas = await response.json();
@@ -35,15 +46,11 @@ const CadastroReserva = () => {
     setError('');
     setLoading(true);
     
-
-    try { 
+    try {
       const reservaJaExiste = await verificaReserva();
 
       if (reservaJaExiste) {
         setError('Horário de reserva indisponível');
-        console.log('Reservas existentes:', reservas);
-        console.log('Nova reserva:', novaReserva);
-
         setLoading(false);
         return;
       }
@@ -54,9 +61,13 @@ const CadastroReserva = () => {
         data,
         horarioEntrada,
         horarioSaida,
-        numeroPessoas,
+        numeroPessoas: Number(numeroPessoas), // Certificando-se de que é um número
         descricao,
+        turma,
+        bloco,
       };
+
+      console.log('Nova Reserva:', novaReserva); // Para depuração
 
       const response = await fetch('http://localhost:3001/api/reservas', {
         method: 'POST',
@@ -67,7 +78,8 @@ const CadastroReserva = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Erro ao cadastrar reserva');
+        const errorMessage = await response.text(); // Obter mensagem de erro
+        throw new Error(`Erro ao cadastrar reserva: ${errorMessage}`);
       }
 
       const result = await response.json();
@@ -79,6 +91,8 @@ const CadastroReserva = () => {
       setHorarioSaida('');
       setNumeroPessoas('');
       setDescricao('');
+      setTurma('');
+      setBloco('');
 
     } catch (error) {
       console.log('Erro:', error);
@@ -149,11 +163,48 @@ const CadastroReserva = () => {
             />
           </div>
 
+          <div className="form-group">
+            <label htmlFor="turma">Turma:</label>
+            <select
+              id="turma"
+              value={turma}
+              onChange={(e) => {
+                setTurma(e.target.value);
+                setBloco(''); // Reseta o bloco ao mudar a turma
+              }}
+              required
+            >
+              <option value="">Selecione uma turma</option>
+              {Object.keys(turmas).map((turma, index) => (
+                <option key={index} value={turma}>{turma}</option>
+              ))}
+            </select>
+          </div>
+
+          {turma && (
+            <div className="form-group">
+              <label htmlFor="bloco">Bloco:</label>
+              <select
+                id="bloco"
+                value={bloco}
+                onChange={(e) => setBloco(e.target.value)}
+                required
+              >
+                <option value="">Selecione um bloco</option>
+                {turmas[turma].map((bloco, index) => (
+                  <option key={index} value={bloco}>{bloco}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
           {error && <div style={{ color: 'red' }}>{error}</div>}
           <button type="submit" disabled={loading}>
             {loading ? 'Cadastrando...' : 'Cadastrar Reserva'}
           </button>
-          <a href="/quadro-reservas"><button type='button' className='checkList'>Verificar reservas</button></a>
+          <a href="/quadro-reservas">
+            <button type='button' className='checkList'>Verificar reservas</button>
+          </a>
         </form>
       </div>
     </>

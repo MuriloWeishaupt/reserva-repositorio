@@ -38,9 +38,9 @@ app.post('/quadro-reservas', autenticaJWT, (req, res) => {
 
 app.post('/api/reservas', (req, res) => {
 
-    const {id,  professor, data, horarioEntrada, horarioSaida, numeroPessoas, descricao} = req.body
+    const {id,  professor, data, horarioEntrada, horarioSaida, numeroPessoas, descricao, turma, bloco} = req.body
 
-    if (!professor || !data || !horarioEntrada || !horarioSaida || !numeroPessoas || !descricao) {
+    if (!professor || !data || !horarioEntrada || !horarioSaida || !numeroPessoas || !descricao || turma || bloco) {
         return res.status(400).json({ message: 'Registre todos os campos'})
     }
     
@@ -63,7 +63,9 @@ app.post('/api/reservas', (req, res) => {
         horarioEntrada,
         horarioSaida,
         numeroPessoas,
-        descricao
+        descricao,
+        turma,
+        bloco,
     }
 
 
