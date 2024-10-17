@@ -4,7 +4,6 @@ import './ListaReserva.css';
 import Header from './Header'
 import PropTypes from 'prop-types';
 import { useAuth } from '../AuthContext';
-import nome from './Login'
 
 const ListaReservas = () => {
   const [reservas, setReservas] = useState([]);
@@ -40,7 +39,7 @@ const ListaReservas = () => {
         </thead>
         <tbody>
           {reservas.map(reserva => (
-            <tr key={reserva.id}>
+            <tr key={reserva.id || reserva_id}>
               <td>{reserva.id}</td>
               <td>{reserva.professor}</td>
               <td>{format(parseISO(reserva.data), 'dd/MM/yyyy')}</td>
