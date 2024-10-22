@@ -13,21 +13,21 @@
     const { login } = useAuth();
 
     const handleSubmit = async (e) => { 
-      e.preventDefault(); // Evita que a página seja recarregada após apertar o botão submit
-      setError(''); // Serve para não aparecerem diversas mensagens de erro na tela caso o usuário erre o login mais de uma vez
+      e.preventDefault();
+      setError('');
 
-      try { // Serve para executar um código que pode gerar erros. Se for gerado, executa o bloco catch
-        const response = await fetch('http://localhost:3001/api/login', {
+      try {
+        const response = await fetch('http://localhost:3033/api/login', {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-          }, // Fetch faz uma requisição HTTP para o endereço solicitado. POST envia os dados para o servidor
-          body: JSON.stringify({ email, senha, ra }) // Converte os dados em JSON
+          },
+          body: JSON.stringify({ email, senha, ra }) 
 
         });
 
         if (!response.ok) {
-          throw new Error('Credenciais inválidas'); // Lança um erro que o bloco catch irá capturar
+          throw new Error('Credenciais inválidas'); 
         }
 
         const data = await response.json(); // Transformar JSON para objeto JS

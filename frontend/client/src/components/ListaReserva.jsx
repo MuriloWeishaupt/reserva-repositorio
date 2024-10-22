@@ -12,7 +12,7 @@ const ListaReservas = () => {
   useEffect(() => {
     const fetchReservas = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/reservas')
+        const response = await fetch('http://localhost:3033/api/reservas')
         const data= await response.json()
         setReservas(data)
       } catch (error) {
@@ -30,21 +30,24 @@ const ListaReservas = () => {
       <table>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nome do Professor</th>
             <th>Data</th>
             <th>Horário</th>
             <th>Descrição</th>
+            <th>Turma</th>
+            <th>Bloco</th>
           </tr>
         </thead>
         <tbody>
           {reservas.map(reserva => (
-            <tr key={reserva.id || reserva_id}>
-              <td>{reserva.id}</td>
-              <td>{reserva.professor}</td>
+            <tr key={reserva.id}>
+              <td>{reserva.nome}</td>
               <td>{format(parseISO(reserva.data), 'dd/MM/yyyy')}</td>
               <td><p>Das {reserva.horarioEntrada}h às {reserva.horarioSaida}h</p></td>
               <td>{reserva.descricao}</td>
+              <td>{reserva.turma}</td>
+              <td>{reserva.bloco}</td>
+
             </tr>
           ))}
         </tbody>

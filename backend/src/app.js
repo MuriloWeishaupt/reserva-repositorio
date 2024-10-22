@@ -8,10 +8,11 @@ import dotenv from "dotenv";
 import Professor from '../src/models/professores.js';
 import Reserva from './models/reservas.js';
 
+
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3033;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -57,7 +58,7 @@ app.post('/quadro-reservas', autenticaJWT, (req, res) => {
 });
 
 app.post('/api/reservas', async (req, res) => {
-    const { professor, data, horarioEntrada, horarioSaida, numeroPessoas, descricao, turma, bloco } = req.body;
+    const {id, nome, data, horarioEntrada, horarioSaida, numeroPessoas, descricao, turma, bloco } = req.body;
 
     if (!data || !horarioEntrada || !horarioSaida || !numeroPessoas || !descricao || !turma || !bloco) {
         return res.status(400).json({ message: 'Registre todos os campos' });
@@ -76,7 +77,8 @@ app.post('/api/reservas', async (req, res) => {
     }
 
     const novaReserva = new Reserva({
-        professor,
+        id,
+        nome,
         data,
         horarioEntrada,
         horarioSaida,

@@ -26,7 +26,7 @@
     };
 
     const verificaReserva = async () => {
-      const response = await fetch(`http://localhost:3001/api/reservas?data=${data}`);
+      const response = await fetch(`http://localhost:3033/api/reservas?data=${data}`);
       
       if (!response.ok) {
         setError('Erro ao verificar reservas');
@@ -56,8 +56,7 @@
         }
 
         const novaReserva = {
-          id: Date.now(),
-          professor: user?.nome,
+          nome: user.nome,
           data,
           horarioEntrada,
           horarioSaida,
@@ -69,7 +68,7 @@
 
         console.log('Nova Reserva:', novaReserva); // Para depuração
 
-        const response = await fetch('http://localhost:3001/api/reservas', {
+        const response = await fetch('http://localhost:3033/api/reservas', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
