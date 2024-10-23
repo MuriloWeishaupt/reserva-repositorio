@@ -4,6 +4,7 @@ import './ListaReserva.css';
 import Header from './Header'
 import PropTypes from 'prop-types';
 import { useAuth } from '../AuthContext';
+import LogoEtec from './LogoEtec';
 
 const ListaReservas = () => {
   const [reservas, setReservas] = useState([]);
@@ -25,6 +26,7 @@ const ListaReservas = () => {
 
   return (
     <div className="lista-reservas">
+      <LogoEtec/>
       <Header nome={user?.nome}/>
       <h2>Lista de Reservas</h2>
       <table>

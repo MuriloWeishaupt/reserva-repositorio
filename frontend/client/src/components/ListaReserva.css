@@ -16,26 +16,18 @@
   }
   
   th, td {
-    border: 1px solid #ccc;
+    font-weight: 600;
+    background-color: #ccc;
+    border: 1px solid #1f1f1f;
     padding: 10px;
     text-align: left;
   }
   
   th {
-    background-color: #f4f4f4;
+    background-color: rgb(131, 0, 0);
+    color: white;
   }
   
-  .confirmada {
-    color: green;
-  }
-  
-  .pendente {
-    color: orange;
-  }
-  
-  .cancelada {
-    color: red;
-  }
 
   .buttonReservar {
     width: 20%;

@@ -4,7 +4,7 @@ import './Header.css';
 const Header = ({ nome }) => {
     return (
         <header className='header'>
-            {nome && <p><span>Usuário logado:</span> {nome}</p>}
+            <div className="user-logged">{nome && <p><span>Usuário logado:</span> {nome}</p>}</div>
         </header>
     )
 }

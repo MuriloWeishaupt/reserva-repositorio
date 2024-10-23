@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './Registra.css';
 import Header from './Header';
 import { useAuth } from '../AuthContext';
+import LogoEtec from './LogoEtec';
 
 const Cadastro = () => {
   const [nome, setNome] = useState(''); //Faz a declaração dos estados do UseState
@@ -23,6 +24,7 @@ const Cadastro = () => {
 
   return (
     <>
+    <LogoEtec/>
     <Header nome={user?.nome}/>
     <div className="cadastro-container">
       <h1>Cadastro de Usuário</h1>

@@ -2,6 +2,8 @@
   import './Reserva.css';
   import Header from './Header';
   import { useAuth } from '../AuthContext';
+  import { useNavigate } from 'react-router-dom'
+import LogoEtec from './LogoEtec';
 
   const CadastroReserva = () => {
     const [data, setData] = useState('');
@@ -14,6 +16,7 @@
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const { user } = useAuth();
+    const navigate = useNavigate()
 
     // Definição de turmas e blocos
     const turmas = {
@@ -67,6 +70,7 @@
         };
 
         console.log('Nova Reserva:', novaReserva); // Para depuração
+        navigate('/quadro-reservas')
 
         const response = await fetch('http://localhost:3033/api/reservas', {
           method: 'POST',
@@ -103,6 +107,7 @@
 
     return (
       <>
+      <LogoEtec/>
         <Header nome={user?.nome} />
         <div className="cadastro-reserva">
           <h2>Cadastro de Reserva do Auditório</h2>

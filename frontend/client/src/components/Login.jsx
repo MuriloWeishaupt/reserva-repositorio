@@ -3,6 +3,7 @@
   import { jwtDecode } from 'jwt-decode';
   import { useAuth } from '../AuthContext';
   import './Login.css';
+import LogoEtec from './LogoEtec';
 
   const Login = () => { // Declara os estados dos dados dos inputs (Iniciando com string vazia) e de erro
     const [email, setEmail] = useState('');
@@ -50,6 +51,7 @@
 
     return (
       <div className="login-container">
+        <LogoEtec/>
         <h1>Login</h1>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
@@ -87,9 +89,9 @@
 
         {error && <div style={{ color: 'red', marginTop: '10px'}}>{error}</div>} 
         {/* Se tem erro, ativa essa linha acima */}
-        <p>
+        {/* <p>
           Não tem uma conta? <a href="/registrar">Cadastre-se</a>
-        </p>
+        </p> */}
       </div>
     );
   };
