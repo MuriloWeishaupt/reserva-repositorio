@@ -34,3 +34,4 @@ jobs:
 
   -name: Push Frontend Docker image to DockerHub
   run: docker push MWeishaupt/garmspipeline-frontend:latest
+  
