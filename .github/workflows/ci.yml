@@ -2,7 +2,7 @@ name: Pipeline CI
 
 on:
   push:
-    branches:
+    branches: 
       - main
 
 jobs:
@@ -10,28 +10,27 @@ jobs:
   build: 
     runs-on: ubuntu-latest
 
-  steps:
-    -uses:  actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  -name: Criando .env para credenciais do banco MongoDB
-  run: |
-    echo "MONGO_URI=${{ secrets.MONGO_URI }}" > backend/.env
+      - name: Criando .env para credenciais do banco MongoDB
+        run: |
+          echo "MONGO_URI=${{ secrets.MONGO_URI }}" > backend/.env
 
-  -name: Login DockerHub 
-  env:
-    DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-    DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    run: echo "$DOCKER_USERNAME" | docker login -u "DOCKER_PASSWORD" --password-stdin
+      - name: Login DockerHub 
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
-  -name: Build Backend Docker image
-  run: docker build -t MWeishaupt/garmspipeline:latest -f backend/Dockerfile backend
+      - name: Build Backend Docker image
+        run: docker build -t MWeishaupt/garmspipeline:latest -f backend/Dockerfile backend
 
-  -name: Build Frontend Docker image
-  run: docker build -t MWeishaupt/garmspipeline-frontend:latest -f frontend/Dockerfile frontend
+      - name: Build Frontend Docker image
+        run: docker build -t MWeishaupt/garmspipeline-frontend:latest -f frontend/Dockerfile frontend
 
-  -name: Push Backend Docker image to DockerHub
-  run: docker push MWeishaupt/garmspipeline:latest
+      - name: Push Backend Docker image to DockerHub
+        run: docker push MWeishaupt/garmspipeline:latest
 
-  -name: Push Frontend Docker image to DockerHub
-  run: docker push MWeishaupt/garmspipeline-frontend:latest
-  
+      - name: Push Frontend Docker image to DockerHub
+        run: docker push MWeishaupt/garmspipeline-frontend:latest
