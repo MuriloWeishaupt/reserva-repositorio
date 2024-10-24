@@ -24,13 +24,13 @@ jobs:
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       - name: Build Backend Docker image
-        run: docker build -t MWeishaupt/garmspipeline:latest -f backend/Dockerfile backend
+        run: docker build -t maathjason/garmspipeline:latest -f backend/Dockerfile backend
 
       - name: Build Frontend Docker image
-        run: docker build -t MWeishaupt/garmspipeline-frontend:latest -f frontend/Dockerfile frontend
+        run: docker build -t maathjason/garmspipeline-frontend:latest -f frontend/Dockerfile frontend
 
       - name: Push Backend Docker image to DockerHub
-        run: docker push MWeishaupt/garmspipeline:latest
+        run: docker push maathjason/garmspipeline:latest
 
       - name: Push Frontend Docker image to DockerHub
-        run: docker push MWeishaupt/garmspipeline-frontend:latest
+        run: docker push maathjason/garmspipeline-frontend:latest
