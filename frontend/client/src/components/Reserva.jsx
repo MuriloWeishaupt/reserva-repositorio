@@ -70,7 +70,6 @@ import LogoEtec from './LogoEtec';
         };
 
         console.log('Nova Reserva:', novaReserva); // Para depuração
-        navigate('/quadro-reservas')
 
         const response = await fetch('http://localhost:3033/api/reservas', {
           method: 'POST',
@@ -96,6 +95,8 @@ import LogoEtec from './LogoEtec';
         // setDescricao('');
         // setTurma('');
         // setBloco('');
+        navigate('/quadro-reservas')
+
 
       } catch (error) {
         console.log('Erro:', error);
