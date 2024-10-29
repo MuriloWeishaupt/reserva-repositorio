@@ -10,8 +10,6 @@ COPY package*.json ./
 # Instalando as dependências
 RUN npm install
 
-# Copiando o arquivo .env para o contêiner
-COPY .env ./
 
 # Copiando o restante do código para o container
 COPY . .
