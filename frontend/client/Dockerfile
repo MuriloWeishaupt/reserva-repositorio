@@ -5,7 +5,7 @@ FROM node:20 AS builder
 WORKDIR /usr/src/app
 
 # Copie os arquivos necessários e instale as dependências
-COPY package.json ./
+COPY client/package*.json ./
 
 RUN npm install
 
