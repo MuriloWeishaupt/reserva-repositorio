@@ -10,9 +10,14 @@ COPY client/package*.json ./
 RUN npm install
 
 # Copie o código e faça o build
-COPY . .
+COPY client/ .
+
+
+RUN ls -la /usr/src/app
 
 RUN npm run build
+
+
 
 # Etapa de produção com Nginx
 FROM nginx:alpine
