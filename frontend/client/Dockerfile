@@ -5,11 +5,13 @@ FROM node:20 AS builder
 WORKDIR /usr/src/app
 
 # Copie os arquivos necessários e instale as dependências
-COPY package*.json ./
+COPY package.json ./
+
 RUN npm install
 
 # Copie o código e faça o build
 COPY . .
+
 RUN npm run build
 
 # Etapa de produção com Nginx
