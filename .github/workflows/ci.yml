@@ -20,10 +20,10 @@ jobs:
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       - name: Build Backend Docker image
-        run: docker build -t maathjason/pipelinegarms-backend -f back-end/Dockerfile back-end
+        run: docker build -t maathjason/pipelinegarms-backend -f backend/Dockerfile back-end
 
       - name: Build Frontend Docker image
-        run: docker build -t maathjason/pipelinegarms-frontend -f front-end/client/Dockerfile front-end
+        run: docker build -t maathjason/pipelinegarms-frontend -f frontend/client/Dockerfile front-end
 
       - name: Push Backend Docker image to DockerHub
         run: docker push maathjason/pipelinegarms-backend
