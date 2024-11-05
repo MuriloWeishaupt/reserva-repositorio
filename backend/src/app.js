@@ -108,3 +108,5 @@ app.get('/api/reservas', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor rodando no endereço: http://localhost:${PORT}`);
 });
+
+export default app
